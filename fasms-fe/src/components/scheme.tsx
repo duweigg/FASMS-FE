@@ -17,9 +17,9 @@ interface SchemeProps {
 
 export const SchemeComponent = ({ scheme, setReload }: SchemeProps) => {
 
-    const handleDeleteClick = (id: string) => {
+    const handleDeleteClick = async (id: string) => {
         if (id != "") {
-            ApiCallFunction('DELETE', DeleteScheme(id));
+            await ApiCallFunction('DELETE', DeleteScheme(id));
             setReload()
         }
     };
@@ -109,11 +109,11 @@ export const AddSchemeComponent = ({ setReload }: AddSchemeProps) => {
             return !previousStatus;
         });
     }
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const payload = scheme
         payload.criteria_groups = newCriteriaGroup
         payload.benefits = [benefit]
-        ApiCallFunction<unknown, SchemePayload>('POST', AddSchemes, { schemes: [payload] });
+        await ApiCallFunction<unknown, SchemePayload>('POST', AddSchemes, { schemes: [payload] });
         setAddScheme((previousStatus) => {
             return !previousStatus;
         });

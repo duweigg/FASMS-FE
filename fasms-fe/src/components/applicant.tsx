@@ -39,8 +39,8 @@ export const ApplicantComponent = ({ applicant, setReload }: ApplicantProps) => 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-    const handleDeleteClick = (id: string) => {
-        ApiCallFunction('DELETE', DeleteApplicants(id));
+    const handleDeleteClick = async (id: string) => {
+        await ApiCallFunction('DELETE', DeleteApplicants(id));
         setReload()
     };
     return (
@@ -163,8 +163,8 @@ export const AddApplicantComponent = ({ setReload }: AddApplicantProps) => {
     );
 
 
-    const handleSubmit = () => {
-        ApiCallFunction<unknown, ApplicantsPayload>('POST', AddApplicants, { applicants: [{ ...applicant, households: newHouseholds }] });
+    const handleSubmit = async () => {
+        await ApiCallFunction<unknown, ApplicantsPayload>('POST', AddApplicants, { applicants: [{ ...applicant, households: newHouseholds }] });
         setAddApplicant((previousStatus) => {
             return !previousStatus;
         });

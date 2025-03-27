@@ -35,19 +35,19 @@ export const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 export const ApplicationComponent = ({ application, setReload }: ApplicationProps) => {
-    const handleDeleteClick = (id: string) => {
-        ApiCallFunction('DELETE', DeleteApplications(id));
+    const handleDeleteClick = async (id: string) => {
+        await ApiCallFunction('DELETE', DeleteApplications(id));
         setReload()
     };
-    const handleApproveClick = (id: string) => {
+    const handleApproveClick = async (id: string) => {
         if (id != "") {
-            ApiCallFunction('PUT', UpdateApplications(id), { application_status: 2 });
+            await ApiCallFunction('PUT', UpdateApplications(id), { application_status: 2 });
             setReload()
         }
     };
-    const handleRejectClick = (id: string) => {
+    const handleRejectClick = async (id: string) => {
         if (id != "") {
-            ApiCallFunction('PUT', UpdateApplications(id), { application_status: 3 });
+            await ApiCallFunction('PUT', UpdateApplications(id), { application_status: 3 });
             setReload()
         }
     };
@@ -108,8 +108,8 @@ export const AddApplicationComponent = ({ applicants, schemes, setReload, setSel
             return !previousStatus;
         });
     }
-    const handleSubmit = () => {
-        ApiCallFunction<unknown, ApplicationsPayload>('POST', SubmitApplications, { applicant_id: applicantId, scheme_id: schemeId });
+    const handleSubmit = async () => {
+        await ApiCallFunction<unknown, ApplicationsPayload>('POST', SubmitApplications, { applicant_id: applicantId, scheme_id: schemeId });
         setAddApplication((previousStatus) => {
             return !previousStatus;
         });
